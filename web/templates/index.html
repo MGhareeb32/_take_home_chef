@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+    />
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            crossorigin="anonymous"
+    />
+
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <form class="d-flex align-items-center">
+            <a href="/" class="col-2" ><img class="col-12" src="static/logo.svg"></a>
+            <input type="search" class="col-6 form-control form-control-dark" placeholder="Search..."
+                   aria-label="Search" name="search_text" id="search_text">
+
+            <div class="col-2">
+                <button type="submit" class="col-12 col-md-offset-2 btn btn-warning">Search</button>
+            </div>
+            <button type="button" class="col-2 btn btn-outline-light">Advanced</button>
+        </form>
+    </div>
+</header>
+
+<table class="container table align-items-center">
+    <thead>
+    <tr>
+        {% for col in ['title', 'year', 'rating_imdb', 'rating_rotten_tomatoes'] %}
+        <th scope="col">{{response['pretty_column_names'][col]}}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for movie in response['movies'] %}
+    <tr>
+        <th scope="row" data-toggle="tooltip" data-placement="bottom" title="{{movie['tooltip']}}">
+            {{movie['title']}}
+        </th>
+        {% for col in ['year', 'rating_imdb', 'rating_rotten_tomatoes'] %}
+        <td>{{movie[col]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript"
+        src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
